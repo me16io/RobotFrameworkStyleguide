@@ -1,33 +1,24 @@
-Table of Contents
+# Table of Contents
+- Naming
+  - Test suite names
+  - Test case names
+  - Keyword names
+  - Naming setup and teardown
+- Test Case Structure
+  - Tests and Resources Lay-out
+  - Workflow tests
+- User keywords
+- Variables
+  - Variable Naming
+- Avoid sleeping
 
-Naming
-
-- --Test suite names
-- --Test case names
-- --Keyword names
-- --Naming setup and teardown
-
-Test Case Structure
-
-- --Tests and Resources Lay-out
-- --Workflow tests
-
-User keywords
-
-Variables
-
-- --Variable Naming
-
-Avoid sleeping
-
-#
 
 # Robot Framework Coding Style
 
-# Naming
+#
 
+#### Naming
 **Test suite names**
-
 - Suite names should be as descriptive as possible.
 - Test Script names should be less than 20 characters.
 - Names are created automatically from file or directory names:
@@ -38,14 +29,12 @@ Avoid sleeping
 - The name of the top-level suite can be overridden from the command line using the --name option if needed.
 - Explains &quot;what&quot; not &quot;how&quot;
 
-Examples:
+> Login\_tests\_using\_selenium.robot -> Login Tests
+> IP\_v4\_and\_v6       ->  IP v4 and v6
 
-Login\_tests\_using\_selenium.robot  -\&gt;  Login Tests
+#
 
-IP\_v4\_and\_v6       -\&gt;  IP v4 and v6
-
-**Test case names**
-
+**Test case names** 
 - Test names should be descriptive, like the suite names.
 - If a suite contains many similar tests, and is well named, test names can be shorter.
 - Name is the same as you specified in the test case file without any conversion.
@@ -90,7 +79,7 @@ IP\_v4\_and\_v6       -\&gt;  IP v4 and v6
 | --- | --- |
 | Suite Setup     Initialize System | Suite Setup     Login To System, Add User, Activate Alarms And Check Balance  |
 | **Good (if only used once):** |   |
-| Suite Setup     Run Keywords...             Login To System    AND...             Add User           AND...             Activate Alarms    AND...             Check Balance  |   |
+| Suite Setup     Run Keywords <br>  ... Login To System    AND <br> ...             Add User           AND <br> ...             Activate Alarms    AND <br> ...             Check Balance  |   |
 
 
 
@@ -108,17 +97,18 @@ IP\_v4\_and\_v6       -\&gt;  IP v4 and v6
 - Maximum Line Length
   - Since Robot Framework is a Domain Specific Language, and sometime the sentence may a little long, we don&#39;t need limit the maximum line length.
 - A single line should be used to separate Tests. For keywords a single line should be used to separate **non-related tasks**. Related tasks do not need this.
-
-\*\*\* Test Cases \*\*\*
-
-Valid Login
-
+```Robot Framework
+*** Test Cases ***
+Login Test
   Given browser is opened to login page
-
-  When user &quot;demo&quot; logs in with password &quot;mode&quot;
-
+  When user "demo" logs in with password "mode"
   Then welcome page should be open
 
+Logout Test
+  Given browser is on dashboard
+  When Log Out is Clicked
+  Then Login Prompt Will Appear
+```
 **Workflow tests**
 
 - Have Keywords describe what a test does.
@@ -136,18 +126,13 @@ Valid Login
 - Max 10 steps, preferably less. (If more, Keywords are likely too specific)
 - Should be written in gherkin if possible (Given/When/Then)
 
-Eg:
-
-\*\*\* Test Cases \*\*\*
-
+```Robot Framework
+*** Test Cases ***
 Valid Login
-
     Given browser is opened to login page
-
-    When user &quot;demo&quot; logs in with password &quot;mode&quot;
-
+    When user "demo" logs in with password "mode"
     Then welcome page should be open
-
+```
 **User keywords**
 
 - Should be easy to understand.
@@ -174,15 +159,12 @@ Valid Login
 - Recommended to also list variables that are set dynamically in the variable table.
 - Set typically using BuiltIn keyword Set Suite Variable.
 - The initial value should explain where/how the real value is set.
-
-\*\*\* Variables \*\*\*
-
+```Robot Framework
+*** Variables ***
 # Default system address. Override when tested against other instances.
-
 ${SERVER URL}     http://nuance.com/     #main server URL
-
 ${USER}           Value set dynamically at suite setup
-
+```
 **Avoid sleeping**
 
 - Sleeping is a fragile way to synchronize tests.
